@@ -3,7 +3,7 @@ import type { Env } from "../types";
 import { callOpenAIJSON } from "../ai/openai";
 import type { FichaTecnica } from "./engineer";
 import type { EquivalenceResult } from "./equivalence";
-import { retrieveChunks } from "../lib/rag";
+import { searchWithConfidence, enrichPrompt } from "../lib/rag-helper";
 
 export interface NcmResult {
   ncm_sugerido: string | null;
@@ -52,6 +52,8 @@ export async function ncmAgent(
   ficha: FichaTecnica,
   opts?: { equivalencePromise?: Promise<EquivalenceResult>; waitMs?: number }
 ): Promise<NcmResult> {
+  console.log('🔄 [NCM] Iniciando classificação fiscal...');
+  
   // Try to enrich context with equivalence if it resolves quickly
   let equivalencia: EquivalenceResult | null = null;
   if (opts?.equivalencePromise) {
@@ -63,23 +65,15 @@ export async function ncmAgent(
       ]) as any;
     } catch {}
   }
+  
   // Build query for RAG from technical specs
-  const ragQuery = `NCM classification for ${ficha.categoria} ${ficha.oem_code || ''} ${ficha.descricao_tecnica || ''}`;
+  const ragQuery = `NCM classificação fiscal ${ficha.categoria} ${ficha.oem_code || ''} ${ficha.descricao_tecnica || ''} capítulo 84 85 87`;
   
-  // Retrieve relevant documentation chunks (with fallback if RAG fails)
-  let chunks: any[] = [];
-  try {
-    chunks = await retrieveChunks(env, ragQuery, 3);
-  } catch (error) {
-    console.warn('RAG retrieval failed, continuing without context:', error);
-  }
+  // Search internal knowledge base with confidence scoring
+  const ragResult = await searchWithConfidence(env, ragQuery, 'ncm', 5);
   
-  // Build context from retrieved chunks and equivalence details
-  let contextStr = '';
-  if (chunks.length > 0) {
-    contextStr = '\n\nRelevant NCM documentation:\n' + 
-      chunks.map((c: any, i: number) => `[${i + 1}] ${c.content.substring(0, 500)}`).join('\n\n');
-  }
+  // Add equivalence hints to context if available
+  let equivalenceContext = '';
   if (equivalencia) {
     const eq = equivalencia;
     const hints: string[] = [];
@@ -87,11 +81,16 @@ export async function ncmAgent(
     if (Array.isArray(eq.codigos_pesquisa?.oem_primario)) hints.push(`OEMs principais: ${eq.codigos_pesquisa.oem_primario.join(', ')}`);
     if (Array.isArray(eq.codigos_pesquisa?.palavras_chave)) hints.push(`Palavras-chave: ${eq.codigos_pesquisa.palavras_chave.slice(0, 6).join(', ')}`);
     if (hints.length) {
-      contextStr += `\n\nEquivalência técnica (hints):\n- ${hints.join('\n- ')}`;
+      equivalenceContext = `\n\nEquivalência técnica (hints):\n- ${hints.join('\n- ')}`;
     }
   }
   
-  const system = NCM_SPEC + contextStr + "\nLembre-se: responda APENAS o JSON.";
+  // Enrich prompt based on RAG confidence
+  const basePrompt = NCM_SPEC + equivalenceContext + "\nLembre-se: responda APENAS o JSON.";
+  const { prompt: system, mode } = enrichPrompt(basePrompt, ragResult);
+  
+  console.log(`📊 [NCM] Modo de busca: ${mode} (confiança RAG: ${(ragResult.confidence * 100).toFixed(0)}%)`);
+  
   const user = JSON.stringify({ ficha, equivalencia: equivalencia ? {
     item_canonico: equivalencia.item_canonico,
     codigos_pesquisa: equivalencia.codigos_pesquisa

@@ -2,7 +2,7 @@
 import type { Env } from "../types";
 import { callOpenAIJSON } from "../ai/openai";
 import { z } from "zod";
-import { retrieveChunks } from "../lib/rag";
+import { searchWithConfidence, enrichPrompt } from "../lib/rag-helper";
 
 export interface FichaTecnica {
   categoria: string;
@@ -51,6 +51,8 @@ Regras:
  * Engineer Agent usando OpenAI de verdade.
  */
 export async function engineerAgent(env: Env, texto: string): Promise<FichaTecnica> {
+  console.log('🔄 [ENGINEER] Iniciando análise técnica...');
+  
   // Se descrição vier vazia, protege:
   const descricao = (texto || "").trim();
   if (!descricao) {
@@ -65,15 +67,18 @@ export async function engineerAgent(env: Env, texto: string): Promise<FichaTecni
     };
   }
 
-  const system = ENGINEER_SPEC + "\nLembre-se: responda APENAS o JSON.";
+  // Search internal knowledge base with confidence scoring
+  const ragResult = await searchWithConfidence(env, descricao, 'technical', 5);
+  
+  // Enrich prompt based on RAG confidence
+  const basePrompt = ENGINEER_SPEC + "\nLembre-se: responda APENAS o JSON.";
+  const { prompt: system, mode } = enrichPrompt(basePrompt, ragResult);
+  
+  console.log(`📊 [ENGINEER] Modo de busca: ${mode} (confiança RAG: ${(ragResult.confidence * 100).toFixed(0)}%)`);
+  
   const user = descricao;
 
-  // Retrieve relevant domain chunks from the RAG KB (if configured).
-  const chunks = await retrieveChunks(env, descricao, 5);
-  const contextText = Array.isArray(chunks) && chunks.length > 0 ? chunks.map((c: any) => `Fonte: ${c.metadata?.source || 'unknown'}\nTrecho: ${c.content}`).join('\n---\n') : '';
-  const userWithContext = contextText ? `${user}\n\nContexto do conhecimento:\n${contextText}` : user;
-
-  const json = await callOpenAIJSON(env, { system, user: userWithContext });
+  const json = await callOpenAIJSON(env, { system, user });
   // Schema validation using Zod
   const fichaSchema = z.object({
     categoria: z.string().nonempty().optional(),

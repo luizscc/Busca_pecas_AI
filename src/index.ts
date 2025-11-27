@@ -1430,6 +1430,11 @@ export default {
       env.SUPABASE = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_KEY);
     }
 
+    // Favicon (silent 204 to avoid 404 logs)
+    if (url.pathname === "/favicon.ico") {
+      return new Response(null, { status: 204 });
+    }
+
     // Front-end simples em GET /
     if (url.pathname === "/" && req.method === "GET") {
       return new Response(HTML_PAGE, {

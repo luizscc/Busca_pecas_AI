@@ -3,7 +3,7 @@ import type { Env } from "../types";
 import { callOpenAIJSON } from "../ai/openai";
 import { EQUIVALENCE_SPEC } from "./config";
 import type { FichaTecnica } from "./engineer";
-import { retrieveChunks } from "../lib/rag";
+import { searchWithConfidence, enrichPrompt } from "../lib/rag-helper";
 
 export interface ItemCanonico {
   categoria: string;
@@ -43,25 +43,20 @@ export async function equivalenceAgent(
   env: Env,
   ficha: FichaTecnica
 ): Promise<EquivalenceResult> {
+  console.log('🔄 [EQUIVALENCE] Iniciando busca de equivalências...');
+  
   // Build query for RAG from part information
-  const ragQuery = `Equivalent parts for ${ficha.categoria} ${ficha.oem_code || ''} ${ficha.fabricante_maquina || ''} ${ficha.modelo_maquina || ''}`;
+  const ragQuery = `${ficha.categoria} ${ficha.oem_code || ''} ${ficha.fabricante_maquina || ''} ${ficha.modelo_maquina || ''} equivalência peças códigos OEM`;
   
-  // Retrieve relevant equivalence documentation (with fallback if RAG fails)
-  let chunks: any[] = [];
-  try {
-    chunks = await retrieveChunks(env, ragQuery, 3);
-  } catch (error) {
-    console.warn('RAG retrieval failed, continuing without context:', error);
-  }
+  // Search internal knowledge base with confidence scoring
+  const ragResult = await searchWithConfidence(env, ragQuery, 'equivalences', 5);
   
-  // Build context from retrieved chunks
-  let contextStr = '';
-  if (chunks.length > 0) {
-    contextStr = '\n\nRelevant parts equivalence data:\n' + 
-      chunks.map((c: any, i: number) => `[${i + 1}] ${c.content.substring(0, 500)}`).join('\n\n');
-  }
+  // Enrich prompt based on RAG confidence
+  const basePrompt = EQUIVALENCE_SPEC + "\nLembre-se: responda APENAS o JSON.";
+  const { prompt: system, mode } = enrichPrompt(basePrompt, ragResult);
   
-  const system = EQUIVALENCE_SPEC + contextStr + "\nLembre-se: responda APENAS o JSON.";
+  console.log(`📊 [EQUIVALENCE] Modo de busca: ${mode} (confiança RAG: ${(ragResult.confidence * 100).toFixed(0)}%)`);
+  
   const user = JSON.stringify(ficha);
 
   const json = await callOpenAIJSON(env, { system, user });
