@@ -16,13 +16,18 @@ export async function callOpenAIJSON(
     throw new Error("OPENAI_API_KEY não está configurada no ambiente.");
   }
 
+  // Choose faster default model; allow override via env.OPENAI_MODEL
+  const model = (env as any).OPENAI_MODEL || "gpt-4o-mini";
+
   const body = {
-    model: "gpt-4.1-mini",
+    model,
     response_format: { type: "json_object" },
     messages: [
       { role: "system", content: system },
       { role: "user", content: user },
     ],
+    temperature: 0.2,
+    max_tokens: 400
   };
 
   const res = await retry(() => fetchWithTimeout("https://api.openai.com/v1/chat/completions", {
@@ -32,7 +37,7 @@ export async function callOpenAIJSON(
       Authorization: `Bearer ${env.OPENAI_API_KEY}`,
     },
     body: JSON.stringify(body),
-  }, 15000));
+  }, 12000));
 
   if (!res.ok) {
     const txt = await res.text();

@@ -1,0 +1,47 @@
+NCM 8409.10.00 - Partes de Motores de Ignição por Centelha (Combustão Interna)
+
+Descrição:
+Partes e acessórios reconhecíveis como exclusiva ou principalmente destinados aos motores das posições 8407 ou 8408, incluindo cabeçotes, blocos de cilindros, cárteres, pistões, anéis de pistão, pinos de pistão, bielas, virabrequins, coletores, válvulas, balancins e comandos de válvulas.
+
+Exemplos de Produtos:
+
+1. Cabeçote de Motor
+   - Função: Vedação superior do bloco, aloja válvulas e velas
+   - OEM Examples: VW 06H103373D, GM 12639925, Fiat 71749340
+   - Aplicação: Motores Otto (gasolina, flex, GNV)
+   - Material: Alumínio fundido
+
+2. Pistão e Biela
+   - OEM: Mahle Original, Cofap Premium, Metal Leve
+   - Part Numbers: VW 06J107065DN (pistão), 06J198401B (biela)
+   - Aplicação: Motor EA888 Gen3 1.8/2.0 TSI
+   - Especificações: Pistão forjado, biela I-beam forjada
+
+3. Comando de Válvulas (Camshaft)
+   - OEM: VW 06H109021BM, 06H109022BM
+   - Tipo: Comando de admissão e escape
+   - Aplicação: VW/Audi motores TSI
+   - Material: Ferro fundido nodular
+
+4. Válvulas de Motor
+   - OEM TRW: 337050 (admissão), 337051 (escape)
+   - Diâmetro admissão: 35mm / escape: 30mm
+   - Aplicação: Motor Fire 1.0/1.4 8V (Fiat)
+   - Material: Aço inox (admissão), inconel (escape)
+
+Alíquota de Importação: 16%
+IPI: 5%
+PIS/COFINS: Regime normal
+
+Observações Importantes:
+- Não inclui motores completos (NCM 8407/8408)
+- Não inclui partes elétricas (8409.91 tem código específico)
+- Turbos e superchargers: NCM 8414.80.19
+- Injetores de combustível: NCM 8409.91.10
+
+Fornecedores Comuns:
+- Mahle (Alemanha/Brasil)
+- Metal Leve (Mahle Group)
+- Cofap (Federal-Mogul)
+- TRW (ZF Group)
+- NGK (velas e sensores)

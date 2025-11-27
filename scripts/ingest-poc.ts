@@ -1,5 +1,8 @@
 // scripts/ingest-poc.ts
 // POC: ingest a text file as document into Supabase chunks with embeddings
+import dotenv from 'dotenv';
+dotenv.config();
+
 import fs from 'fs';
 import path from 'path';
 import { createClient } from '@supabase/supabase-js';
@@ -22,7 +25,7 @@ async function createEmbedding(text: string) {
       Authorization: `Bearer ${OPENAI_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ model: 'text-embedding-3-large', input: text })
+    body: JSON.stringify({ model: 'text-embedding-3-small', input: text })
   });
   const data = await res.json();
   return data.data[0].embedding;
@@ -44,12 +47,18 @@ async function ingest(documentPath: string) {
   const chunks = splitChunks(text, 1000);
   for (const [index, chunk] of chunks.entries()) {
     const embedding = await createEmbedding(chunk);
-    const { data, error } = await supabase.from('chunks').insert({
-      document_id: documentId,
-      content: chunk,
-      metadata: { index },
-      embedding
+    
+    // Format as pgvector string: [1.23,4.56,...]
+    const vectorStr = '[' + embedding.join(',') + ']';
+    
+    // Use RPC to insert with proper vector type
+    const { data, error } = await supabase.rpc('insert_chunk', {
+      p_document_id: documentId,
+      p_content: chunk,
+      p_metadata: { index },
+      p_embedding: vectorStr
     });
+    
     if (error) {
       console.error('Insert error', error);
       return;

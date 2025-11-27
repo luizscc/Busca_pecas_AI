@@ -1,0 +1,40 @@
+EQUIVALÊNCIAS TÉCNICAS - PEÇAS KOMATSU
+
+BOMBAS HIDRÁULICAS PC200
+
+OEM Original: 708-2L-00300
+Fabricante: Komatsu
+Aplicação: Escavadeira PC200-8, PC200-7, PC200LC-8
+
+EQUIVALÊNCIAS DIRETAS:
+- Kawasaki: K3V112DT
+- Rexroth: A10VSO140
+- Sauer Danfoss: Series 51
+
+EQUIVALÊNCIAS AFTERMARKET:
+- Hengyuan: A8VO140
+- JCB: 20/925328
+- Volvo: 14528267
+
+ESPECIFICAÇÕES TÉCNICAS:
+- Tipo: Pistão axial
+- Deslocamento: 112cc/rev
+- Pressão máxima: 350 bar
+- Rotação: 2200 rpm
+- Peso: 65kg
+
+FORNECEDORES RECOMENDADOS:
+- China: Jinan Hydraulic (premium)
+- Índia: Mumbai Pumps (médio)
+- Turquia: Ankara Hydraulic (básico)
+
+COMPATIBILIDADE:
+✓ PC200-6/7/8/LC
+✓ PC210-7/8
+✗ PC130 (modelo menor)
+✗ PC300 (modelo maior)
+
+OBSERVAÇÕES:
+- Sempre verificar número de série da máquina
+- Bombas remanufaturadas têm 6 meses de garantia
+- Originais Komatsu: 12 meses de garantia

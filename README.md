@@ -8,10 +8,15 @@ Pré-requisitos:
 
 Instalação:
 ```powershell
-npm install
+# Prefer using CMD / Command Prompt on Windows when PowerShell scripts are restricted
+# or you can run PowerShell with the proper ExecutionPolicy (RemoteSigned)
+npm cache clean --force
+rmdir /s /q node_modules  # only if node_modules exists
+del /q package-lock.json  # optional
+npm install --legacy-peer-deps
 ```
 
-Configurar variáveis/segredos (Cloudflare Wrangler):
+Configurar variáveis/segredos (Cloudflare Wrangler / Worker secrets):
 ```powershell
 npx wrangler secret put OPENAI_API_KEY
 npx wrangler secret put SUPABASE_URL
@@ -48,4 +53,15 @@ setx SUPABASE_SERVICE_KEY "<service-role-key>"
 setx OPENAI_API_KEY "<your-openai-key>"
 npm run ingest ./docs/your-manual.txt
 ```
+
+Local environment file (.env)
+------------------------------
+You can use `.env` (for local testing only) with the variables defined in `.env.example`. Example (PowerShell):
+```powershell
+# load from .env - requires tooling that supports .env (ts-node may not automatically load it)
+Get-Content .env | Foreach-Object { $var = $_ -split '='; Set-Item -Path Env:\$($var[0]) -Value $var[1] }
+```
+
+If you prefer, add the required variables to the environment using `setx` (persistent) or export them in the shell session before running the ingestion/tests.
+
 

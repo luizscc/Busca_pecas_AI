@@ -1,0 +1,56 @@
+Catálogo de Peças Automotivas - Demonstração
+
+Este é um documento de exemplo para testar o sistema de busca inteligente de peças.
+
+BOMBA D'ÁGUA
+Código: BDA-12345
+Fabricante: Gates
+Aplicação: Motor EA888 Gen3 (1.8/2.0 TSI)
+Veículos compatíveis: VW Golf, Audi A3, Tiguan
+Ano: 2014-2020
+NCM: 8413.30.19
+Preço: R$ 350,00
+Equivalência: Urby UBG1234, Maxauto MAX5678
+
+FILTRO DE ÓLEO
+Código: FO-98765
+Fabricante: Mann Filter
+Aplicação: Motores 1.0, 1.4 Fire Flex
+Veículos compatíveis: Fiat Uno, Palio, Siena
+Ano: 2010-2020
+NCM: 8421.23.00
+Preço: R$ 45,00
+Equivalência: Tecfil PSL140, Fram PH5796
+
+PASTILHA DE FREIO DIANTEIRA
+Código: PFD-55443
+Fabricante: TRW
+Aplicação: Sistema de freio dianteiro
+Veículos compatíveis: Toyota Corolla, RAV4
+Ano: 2015-2023
+NCM: 8708.30.11
+Preço: R$ 280,00
+Material: Cerâmica
+Equivalência: Bosch BB1234, Fras-le PD/1234
+
+CORREIA DENTADA
+Código: CDT-77889
+Fabricante: Dayco
+Aplicação: Motor Fire 1.0/1.4 8V
+Veículos compatíveis: Fiat Uno, Palio, Strada
+Ano: 2005-2020
+NCM: 4010.31.00
+Comprimento: 120 dentes
+Preço: R$ 180,00
+Equivalência: Gates 5498XS, Contitech CT1028
+
+VELA DE IGNIÇÃO
+Código: VI-33221
+Fabricante: NGK
+Aplicação: Motor EA111 1.6 MSI
+Veículos compatíveis: VW Gol, Voyage, Fox
+Ano: 2013-2023
+NCM: 8511.10.00
+Abertura: 0.8mm
+Preço: R$ 28,00
+Equivalência: Bosch FR8DPX, Denso IK20TT

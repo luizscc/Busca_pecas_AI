@@ -1,0 +1,68 @@
+PASTILHA DE FREIO DIANTEIRA - Sistema ATE (VW/Audi)
+
+OEM Original:
+- VW: 5Q0698151D, 5Q0698151K
+- Audi: 8V0698151J
+- Seat: 5Q0698151D
+- Skoda: 5Q0698151D
+
+Equivalências Premium (OE Quality):
+- ATE: 13.0460-7344.2
+- Bosch: 0 986 494 779
+- Brembo: P85163
+- TRW: GDB2066
+- Textar: 2552401
+
+Equivalências Econômicas:
+- Fras-le: FJ3241/1
+- Jurid: 573731J
+- Ferodo: FDB4942
+- ABS: 38186
+- NK: 2252113
+
+Aplicação Veículos:
+- VW Golf VII 1.4 TSI (2013-2020)
+- VW Golf VIII 1.0/1.5 TSI (2019-atual)
+- Audi A3 8V 1.4/1.8 TFSI (2013-2020)
+- Seat Leon 5F 1.4 TSI (2013-2020)
+- Skoda Octavia III 1.4 TSI (2013-2020)
+
+Especificações Técnicas:
+- Sistema de freio: ATE (Teves)
+- Tipo de pinça: Flutuante (1 pistão)
+- Dimensões: 155.2 x 69.8 x 17.5 mm
+- Área de contato: 108.4 cm²
+- Material: Semi-metálico com shim
+- Sensor de desgaste: Incluso (apenas lado esquerdo)
+- Peso: 360g (jogo completo)
+
+Características Importantes:
+- ⚠️ Atenção: Versão com sensor diferente da sem sensor
+- ⚠️ Verificar diâmetro do disco: Ø312mm (1.4 TSI) ou Ø288mm (1.0 TSI)
+- Kit completo inclui: 4 pastilhas + shims + sensor + acessórios
+- Sentido de montagem: Indicador de desgaste sempre para baixo
+
+Torques de Montagem:
+- Parafusos guia da pinça: 30 Nm
+- Suporte da pinça: 110 Nm
+- Roda: 120 Nm
+
+Manutenção:
+- Trocar sempre em jogos (eixo completo)
+- Verificar estado dos discos
+- Lubrificar guias da pinça
+- Não aplicar graxa nas pastilhas
+
+Preços Médio (Referência 2025):
+- OEM VW: R$ 450-550
+- Premium (ATE/Bosch): R$ 250-350
+- Econômico (Fras-le): R$ 150-200
+
+Observações:
+- Pastilhas premium reduzem ruído
+- Econômicas geram mais pó de freio
+- OEM vem com sensor original
+- Vida útil: 40.000-60.000 km (uso normal)
+
+Cross-Reference Rápido:
+VW 5Q0698151D = ATE 13.0460-7344.2 = Brembo P85163 = Bosch 0986494779

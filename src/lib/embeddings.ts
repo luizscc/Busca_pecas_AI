@@ -5,7 +5,7 @@ import { fetchWithTimeout, retry } from './fetch-utils';
 export async function createEmbedding(env: Env, text: string): Promise<number[]> {
   if (!env.OPENAI_API_KEY) throw new Error('No OpenAI key');
 
-  const body = { model: 'text-embedding-3-large', input: text };
+  const body = { model: 'text-embedding-3-small', input: text };
 
   const res = await retry(() => fetchWithTimeout('https://api.openai.com/v1/embeddings', {
     method: 'POST',

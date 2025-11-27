@@ -9,8 +9,8 @@ export async function retrieveChunks(env: Env, text: string, k = 5, documentId?:
 
   const embedding = await createEmbedding(env, text);
 
-  // choose filtered RPC if documentId is provided
-  const rpcName = documentId ? 'match_chunks_filtered' : 'match_chunks';
+  // Use exact search functions for now (works with any dataset size)
+  const rpcName = documentId ? 'match_chunks_filtered_exact' : 'match_chunks_exact';
   const params = documentId ? { p_embedding: embedding, p_k: k, p_doc_id: documentId } : { p_embedding: embedding, p_k: k };
 
   const { data, error } = await supabase.rpc(rpcName, params);

@@ -2,6 +2,8 @@
 import type { Env } from "../types";
 import { callOpenAIJSON } from "../ai/openai";
 import type { FichaTecnica } from "./engineer";
+import type { EquivalenceResult } from "./equivalence";
+import { retrieveChunks } from "../lib/rag";
 
 export interface NcmResult {
   ncm_sugerido: string | null;
@@ -43,11 +45,57 @@ Regras:
 `;
 
 /**
- * NCM Agent usando OpenAI.
+ * NCM Agent usando OpenAI com RAG.
  */
-export async function ncmAgent(env: Env, ficha: FichaTecnica): Promise<NcmResult> {
-  const system = NCM_SPEC + "\nLembre-se: responda APENAS o JSON.";
-  const user = JSON.stringify(ficha);
+export async function ncmAgent(
+  env: Env,
+  ficha: FichaTecnica,
+  opts?: { equivalencePromise?: Promise<EquivalenceResult>; waitMs?: number }
+): Promise<NcmResult> {
+  // Try to enrich context with equivalence if it resolves quickly
+  let equivalencia: EquivalenceResult | null = null;
+  if (opts?.equivalencePromise) {
+    const waitMs = opts.waitMs ?? 2000; // small wait budget
+    try {
+      equivalencia = await Promise.race([
+        opts.equivalencePromise,
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), waitMs))
+      ]) as any;
+    } catch {}
+  }
+  // Build query for RAG from technical specs
+  const ragQuery = `NCM classification for ${ficha.categoria} ${ficha.oem_code || ''} ${ficha.descricao_tecnica || ''}`;
+  
+  // Retrieve relevant documentation chunks (with fallback if RAG fails)
+  let chunks: any[] = [];
+  try {
+    chunks = await retrieveChunks(env, ragQuery, 3);
+  } catch (error) {
+    console.warn('RAG retrieval failed, continuing without context:', error);
+  }
+  
+  // Build context from retrieved chunks and equivalence details
+  let contextStr = '';
+  if (chunks.length > 0) {
+    contextStr = '\n\nRelevant NCM documentation:\n' + 
+      chunks.map((c: any, i: number) => `[${i + 1}] ${c.content.substring(0, 500)}`).join('\n\n');
+  }
+  if (equivalencia) {
+    const eq = equivalencia;
+    const hints: string[] = [];
+    if (eq.item_canonico?.oem_principal) hints.push(`OEM principal: ${eq.item_canonico.oem_principal}`);
+    if (Array.isArray(eq.codigos_pesquisa?.oem_primario)) hints.push(`OEMs principais: ${eq.codigos_pesquisa.oem_primario.join(', ')}`);
+    if (Array.isArray(eq.codigos_pesquisa?.palavras_chave)) hints.push(`Palavras-chave: ${eq.codigos_pesquisa.palavras_chave.slice(0, 6).join(', ')}`);
+    if (hints.length) {
+      contextStr += `\n\nEquivalência técnica (hints):\n- ${hints.join('\n- ')}`;
+    }
+  }
+  
+  const system = NCM_SPEC + contextStr + "\nLembre-se: responda APENAS o JSON.";
+  const user = JSON.stringify({ ficha, equivalencia: equivalencia ? {
+    item_canonico: equivalencia.item_canonico,
+    codigos_pesquisa: equivalencia.codigos_pesquisa
+  } : null });
 
   const json = await callOpenAIJSON(env, { system, user });
 

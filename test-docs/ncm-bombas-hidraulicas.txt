@@ -1,0 +1,28 @@
+CLASSIFICAÇÃO NCM - BOMBAS HIDRÁULICAS
+
+NCM 8413.30 - Bombas de combustível, óleo ou líquido de arrefecimento, para motores de ignição por centelha ou por compressão
+
+NCM 8413.30.19 - Outras bombas de pistão
+
+Exemplos:
+- Bombas hidráulicas de pistão axial: NCM 8413.30.19
+- Bombas para escavadeiras e retroescavadeiras: NCM 8413.30.19
+- Bombas para transmissão de máquinas pesadas: NCM 8413.30.19
+
+NCM 8413.50.00 - Outras bombas volumétricas alternativas
+
+NCM 8413.60.00 - Outras bombas volumétricas rotativas
+
+NCM 8413.70.00 - Outras bombas centrífugas
+
+NCM 8413.81.00 - Bombas para líquidos
+
+Observações Importantes:
+- Bombas Komatsu PC200: Geralmente classificadas em 8413.30.19
+- Bombas Caterpillar: Verificar modelo específico
+- Bombas genéricas aftermarket: Classificar conforme tipo construtivo
+
+Alíquotas:
+- Importação: 14% + ICMS
+- IPI: 10%
+- PIS/COFINS: Verificar regime

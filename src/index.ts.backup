@@ -1,0 +1,545 @@
+import { orchestrator } from "./agents/orchestrator";
+import { processDocument } from "./lib/document-processor";
+import type { Env } from "./types";
+
+const HTML_PAGE = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buscador de Peças IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 800px;
+      background: #020617;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      border: 1px solid #1f2937;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+    label {
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: block;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px #22c55e55;
+    }
+    button {
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: #22c55e;
+      color: #022c22;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #16a34a;
+    }
+    .output {
+      margin-top: 20px;
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      background: #020617;
+      border-radius: 8px;
+      border: 1px solid #1f2937;
+      padding: 12px;
+      max-height: 380px;
+      overflow: auto;
+      font-size: 12px;
+      white-space: pre;
+    }
+    .status {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #a5b4fc;
+    }
+    .upload-section {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid #1f2937;
+    }
+    .upload-section h2 {
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .upload-section p {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 16px;
+    }
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .category-tab {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .category-tab:hover {
+      border-color: #22c55e;
+      color: #e5e7eb;
+    }
+    .category-tab.active {
+      background: #22c55e;
+      color: #022c22;
+      border-color: #22c55e;
+      font-weight: 600;
+    }
+    .dropzone {
+      border: 2px dashed #374151;
+      border-radius: 8px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #0f172a;
+    }
+    .dropzone:hover {
+      border-color: #22c55e;
+      background: #1a2332;
+    }
+    .dropzone.dragover {
+      border-color: #22c55e;
+      background: #1a2332;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+    }
+    .dropzone-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    .dropzone-text {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+    .dropzone-hint {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .file-input {
+      display: none;
+    }
+    .upload-status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #0f172a;
+      border: 1px solid #374151;
+      font-size: 13px;
+      display: none;
+    }
+    .upload-status.show {
+      display: block;
+    }
+    .upload-status.processing {
+      border-color: #3b82f6;
+      color: #93c5fd;
+    }
+    .upload-status.success {
+      border-color: #22c55e;
+      color: #86efac;
+    }
+    .upload-status.error {
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+    .file-list {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .file-item {
+      padding: 8px;
+      background: #020617;
+      border-radius: 6px;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .file-item .filename {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-item .status-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .status-badge.processing {
+      background: #1e3a8a;
+      color: #93c5fd;
+    }
+    .status-badge.success {
+      background: #14532d;
+      color: #86efac;
+    }
+    .status-badge.error {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Buscador de Peças IA</h1>
+    <p>Teste rápido do orquestrador: digite a descrição da peça e clique em <strong>Buscar</strong>.</p>
+
+    <form id="form-busca">
+      <label for="descricao">Descrição da peça</label>
+      <input
+        id="descricao"
+        type="text"
+        value="bomba hidráulica PC200-8 OEM 708-2L-00300"
+        autocomplete="off"
+      />
+      <button type="submit">Buscar</button>
+      <div class="status" id="status"></div>
+    </form>
+
+    <div class="output" id="output">{ resultado aparecerá aqui }</div>
+
+    <!-- Seção de Upload -->
+  <script>
+    // === BUSCA DE COMPONENTES ===
+    const form = document.getElementById('form-busca');
+    const input = document.getElementById('descricao');
+    const output = document.getElementById('output');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const descricao = input.value.trim();
+      if (!descricao) return;
+
+      statusEl.textContent = 'Buscando...';
+      output.textContent = '';
+
+      try {
+        const resp = await fetch('/buscar-componente', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ descricao })
+        });
+
+        const data = await resp.json();
+        statusEl.textContent = 'OK (' + resp.status + ')';
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        statusEl.textContent = 'Erro na requisição';
+        output.textContent = String(err);
+      }
+    });
+
+    // === UPLOAD DE DOCUMENTOS ===
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadStatus = document.getElementById('uploadStatus');
+    const fileList = document.getElementById('fileList');
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    
+    let selectedCategory = 'ncm';
+    
+    // Gerenciar seleção de categoria
+    categoryTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        categoryTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    // API principal - Busca de componentes
+    if (url.pathname === "/buscar-componente" && req.method === "POST") {
+      try {
+        const body = await req.json();
+        const out = await orchestrator(env, body);
+        return new Response(JSON.stringify(out, null, 2), {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (err) {
+        return new Response(
+          JSON.stringify({
+            erro: "Falha ao processar requisição",
+            detalhe: String(err)
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json" }
+          }
+        );
+      }
+    }
+
+    // API de upload de documentos para RAG
+    if (url.pathname === "/upload-document" && req.method === "POST") {
+      try {
+        const body = await req.json() as {
+          content: string;
+          filename: string;
+          category: string;
+        };
+
+        // Validações básicas
+        if (!body.content || !body.filename || !body.category) {
+          return new Response(
+            JSON.stringify({
+              success: false,
+              error: "Campos obrigatórios: content, filename, category"
+            }),
+            {
+              status: 400,
+              headers: { "Content-Type": "application/json" }
+            }
+          );
+        }
+
+        // Validar categoria
+        const validCategories = ['ncm', 'equivalences', 'technical', 'suppliers'];
+        if (!validCategories.includes(body.category)) {
+          return new Response(
+            JSON.stringify({
+              success: false,
+              error: "Categoria inválida. Use: " + validCategories.join(', ')
+            }),
+            {
+              status: 400,
+              headers: { "Content-Type": "application/json" }
+            }
+          );
+        }
+
+        // Processar documento
+        const result = await processDocument(
+          env,
+          body.content,
+          body.filename,
+          body.category
+        );
+
+        return new Response(JSON.stringify(result), {
+          status: result.success ? 200 : 500,
+          headers: { 
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          }
+        });
+
+      } catch (err) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: "Falha ao processar documento",
+            details: String(err)
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json" }
+          }
+        );
+      }
+    }
+
+    return new Response("Rota não encontrada", { status: 404 });
+    // Seleção via input
+    fileInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      handleFiles(files);
+      fileInput.value = ''; // Reset input
+    });
+
+    // Processar arquivos
+    async function handleFiles(files) {
+      if (files.length === 0) return;
+
+      // Filtrar apenas .txt e .md
+      const validFiles = files.filter(f => 
+        f.name.endsWith('.txt') || f.name.endsWith('.md')
+      );
+
+      if (validFiles.length === 0) {
+        showStatus('error', 'Nenhum arquivo válido (.txt ou .md) foi selecionado.');
+        return;
+      }
+
+      // Mostrar arquivos na lista
+      fileList.innerHTML = validFiles.map((f, i) => \`
+        <div class="file-item" id="file-\${i}">
+          <span class="filename">\${f.name}</span>
+          <span class="status-badge processing">Processando...</span>
+        </div>
+      \`).join('');
+
+      showStatus('processing', \`Processando \${validFiles.length} arquivo(s)...\`);
+
+      // Processar cada arquivo
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (let i = 0; i < validFiles.length; i++) {
+        const file = validFiles[i];
+        const fileEl = document.getElementById(\`file-\${i}\`);
+        const badge = fileEl.querySelector('.status-badge');
+
+        try {
+          const content = await file.text();
+          
+          const resp = await fetch('/upload-document', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              content,
+              filename: file.name,
+              category: selectedCategory
+            })
+          });
+
+          const result = await resp.json();
+
+          if (result.success) {
+            badge.className = 'status-badge success';
+            badge.textContent = \`✓ \${result.chunksCreated} chunks\`;
+            successCount++;
+          } else {
+            badge.className = 'status-badge error';
+            badge.textContent = '✗ Erro';
+            errorCount++;
+          }
+        } catch (err) {
+          badge.className = 'status-badge error';
+          badge.textContent = '✗ Erro';
+          errorCount++;
+        }
+      }
+
+      // Status final
+      if (errorCount === 0) {
+        showStatus('success', 
+          \`✅ \${successCount} arquivo(s) processado(s) com sucesso! Os agentes já podem usar esse conhecimento.\`
+        );
+      } else {
+        showStatus('error', 
+          \`⚠️ \${successCount} sucesso, \${errorCount} erro(s). Verifique os arquivos.\`
+        );
+      }
+    }
+
+    function showStatus(type, message) {
+      uploadStatus.className = \`upload-status show \${type}\`;
+      uploadStatus.textContent = message;
+    }
+  </script>tatusEl = document.getElementById('status');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const descricao = input.value.trim();
+      if (!descricao) return;
+
+      statusEl.textContent = 'Buscando...';
+      output.textContent = '';
+
+      try {
+        const resp = await fetch('/buscar-componente', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ descricao })
+        });
+
+        const data = await resp.json();
+        statusEl.textContent = 'OK (' + resp.status + ')';
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        statusEl.textContent = 'Erro na requisição';
+        output.textContent = String(err);
+      }
+    });
+  </script>
+</body>
+</html>`;
+
+export default {
+  async fetch(req: Request, env: Env): Promise<Response> {
+    const url = new URL(req.url);
+
+    // Front-end simples em GET /
+    if (url.pathname === "/" && req.method === "GET") {
+      return new Response(HTML_PAGE, {
+        status: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+      });
+    }
+
+    // API principal
+    if (url.pathname === "/buscar-componente" && req.method === "POST") {
+      try {
+        const body = await req.json();
+        const out = await orchestrator(env, body);
+        return new Response(JSON.stringify(out, null, 2), {
+          status: 200,
+          headers: { "Content-Type": "application/json" }
+        });
+      } catch (err) {
+        return new Response(
+          JSON.stringify({
+            erro: "Falha ao processar requisição",
+            detalhe: String(err)
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json" }
+          }
+        );
+      }
+    }
+
+    return new Response("Rota não encontrada", { status: 404 });
+  }
+};

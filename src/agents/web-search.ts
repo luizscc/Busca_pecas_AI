@@ -37,7 +37,6 @@ export async function buscarOfertasWeb(
   req: WebSearchRequest
 ): Promise<WebSearchOferta[]> {
   if (!env.BACKEND_SEARCH_URL) {
-    console.warn("[WEB-SEARCH] BACKEND_SEARCH_URL não configurada.");
     return [];
   }
 
@@ -49,19 +48,19 @@ export async function buscarOfertasWeb(
     }, 15000), 2);
 
     if (!res.ok) {
-    const txt = await res.text();
-    console.error("[WEB-SEARCH] Erro do backend:", res.status, txt);
-    return [];
-  }
+      const txt = await res.text();
+      console.warn(`⚠️ Backend de busca (${req.pais}) indisponível:`, res.status);
+      return [];
+    }
 
     const data = await res.json();
-  if (!Array.isArray(data)) {
-    console.error("[WEB-SEARCH] Resposta do backend não é array:", data);
-    return [];
-  }
+    if (!Array.isArray(data)) {
+      console.warn(`⚠️ Resposta inválida do backend (${req.pais})`);
+      return [];
+    }
     return data;
   } catch (e) {
-    console.error('[WEB-SEARCH] fetch error', String(e));
+    // Backend indisponível - modo silencioso, retorna array vazio
     return [];
   }
 }
