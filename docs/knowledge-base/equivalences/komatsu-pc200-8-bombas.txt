@@ -1,0 +1,44 @@
+# Equivalências - Bombas Hidráulicas Komatsu PC200-8
+
+## Bomba Hidráulica Principal
+OEM Original: 708-2L-00300
+Fabricante: Komatsu
+Modelo: PC200-8
+
+### Códigos Equivalentes Verificados
+- Aftermarket Premium: HPV102FW (Kawasaki)
+- Aftermarket OEM Style: 708-2L-00301 (versão atualizada)
+- Cross Reference: 20Y-60-31121 (modelo anterior PC200-7)
+- Intercambiável com: PC210LC-8, PC220LC-8 (mesma família)
+
+### Fornecedores Confiáveis
+1. **Kawasaki Heavy Industries** (Original)
+   - Código: HPV102FW
+   - Qualidade: OEM
+   - Prazo: 45-60 dias
+   
+2. **Eaton Hydraulics** (Premium Aftermarket)
+   - Código: PVH098
+   - Qualidade: Premium
+   - Garantia: 2 anos
+
+3. **Hydrosila** (Aftermarket Standard)
+   - Código: PC200-8-PUMP
+   - Qualidade: Standard
+   - Preço: 40% mais barato que OEM
+
+### Especificações Técnicas
+- Tipo: Pistão Axial de Deslocamento Variável
+- Pressão Máxima: 345 bar (5000 psi)
+- Vazão: 235 L/min @ 2150 RPM
+- Montagem: SAE B (4 furos)
+- Eixo: Cônico 1:8
+
+### NCM Recomendado
+8413.60.90 - Bombas volumétricas rotativas de pistões
+
+### Observações Importantes
+- Verificar compatibilidade de eixo (versões antigas usam eixo reto)
+- Bomba requer óleo hidráulico ISO VG 46
+- Substituir filtros durante instalação
+- Torque dos parafusos: 85-95 Nm

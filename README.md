@@ -23,10 +23,27 @@ npx wrangler secret put SUPABASE_URL
 npx wrangler secret put SUPABASE_SERVICE_KEY
 ```
 
-Rodar em ambiente de desenvolvimento:
+ Rodar em ambiente de desenvolvimento:
 ```powershell
-npx wrangler dev
+# opção recomendada (sem login OAuth do Cloudflare)
+npm run dev:local
+
+# ou
+npx wrangler dev --local
+
+# se preferir com login Cloudflare
+npm run dev
 ```
+
+ Healthcheck rápido:
+```bash
+curl http://127.0.0.1:8787/healthz
+```
+
+ Upload de conhecimento (RAG):
+- Na página inicial, use a seção "📚 Base de Conhecimento RAG" (drag & drop ou seletor de arquivos) e escolha a categoria
+	(`ncm`, `equivalences`, `technical`, `suppliers`).
+- A API também está disponível em `POST /upload-document` com body `{ content, filename, category }`.
 
 Observações:
 - Leia `SUPABASE_SETUP.md` para configurar seu projeto Supabase e rodar a ingestão RAG.

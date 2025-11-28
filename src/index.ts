@@ -1435,6 +1435,18 @@ export default {
       return new Response(null, { status: 204 });
     }
 
+    // Healthcheck simples
+    if (url.pathname === "/healthz" && req.method === "GET") {
+      return new Response(
+        JSON.stringify({
+          status: "ok",
+          time: new Date().toISOString(),
+          supabaseConfigured: Boolean(env.SUPABASE_URL && env.SUPABASE_SERVICE_KEY),
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     // Front-end simples em GET /
     if (url.pathname === "/" && req.method === "GET") {
       return new Response(HTML_PAGE, {

@@ -1,0 +1,117 @@
+# Classificação NCM - Componentes Hidráulicos
+
+## Bombas Hidráulicas (Capítulo 84.13)
+
+### 8413.50 - Outras bombas volumétricas alternativas
+**Aplicação:** Bombas de pistões alternativos lineares
+**Exemplos:**
+- Bombas de pistões radiais
+- Bombas de êmbolos em linha
+- Aplicações industriais de alta pressão
+
+### 8413.60 - Outras bombas volumétricas rotativas
+**Aplicação:** Bombas de pistões rotativos (mais comum em equipamentos)
+**Subcategorias:**
+
+#### 8413.60.10 - Bombas de engrenagens
+- Bombas de engrenagens externas
+- Bombas de engrenagens internas
+- Vazão constante
+- Usadas em sistemas auxiliares
+
+#### 8413.60.90 - Outras bombas volumétricas rotativas
+- **Bombas de pistões axiais** (PC200-8, PC300, etc.)
+- **Bombas de pistões radiais**
+- Deslocamento variável ou fixo
+- Alta pressão (>200 bar)
+- **Classificação mais comum para bombas de escavadeiras**
+
+### 8413.70 - Outras bombas centrífugas
+**Aplicação:** Bombas de água, circulação, arrefecimento
+**Exemplos:**
+- Bomba d'água do motor
+- Bomba de circulação de radiador
+- NÃO usar para bombas hidráulicas principais
+
+## Válvulas (Capítulo 84.81)
+
+### 8481.10 - Válvulas redutoras de pressão
+- Válvulas de alívio principais
+- Válvulas de segurança
+- Pressão >50 bar
+
+### 8481.20 - Válvulas para transmissões oleohidráulicas
+**Classificação preferencial para componentes hidráulicos móveis**
+- Válvulas direcionais (spool valves)
+- Blocos de controle hidráulico
+- Válvulas proporcionais
+- **Usar para válvulas principais de escavadeiras**
+
+### 8481.80 - Outras válvulas
+- Válvulas de retenção simples
+- Válvulas solenoides auxiliares
+- Componentes secundários
+
+## Motores Hidráulicos (Capítulo 84.12)
+
+### 8412.21 - Motores hidráulicos de movimento retilíneo
+- Cilindros hidráulicos lineares
+- Atuadores de pistão
+- **Classificação para cilindros de braço, lança, caçamba**
+
+#### 8412.21.10 - Cilindros para máquinas agrícolas
+- Tratores
+- Colheitadeiras
+
+#### 8412.21.90 - Outros cilindros hidráulicos
+- **Escavadeiras** (usar este)
+- Guindastes
+- Equipamentos de construção
+
+### 8412.29 - Outros motores hidráulicos
+- Motores rotativos de giro (swing motor)
+- Motores de esteiras/translação
+- Motores de ventiladores
+
+## Filtros (Capítulo 84.21)
+
+### 8421.23 - Aparelhos para filtrar óleos
+- Filtros de retorno hidráulico
+- Filtros de pressão
+- Filtros de sucção
+- Elementos filtrantes
+
+## Acumuladores (Capítulo 84.19)
+
+### 8419.50 - Trocadores de calor
+- Resfriadores de óleo (oil coolers)
+- Radiadores hidráulicos
+- Aftercoolers
+
+## Dicas de Classificação
+
+### Como escolher entre 8413.60.10 e 8413.60.90?
+- **8413.60.10:** Se a bomba é de engrenagens (gear pump)
+- **8413.60.90:** Se a bomba é de pistões axiais ou radiais
+- **Regra:** Escavadeiras quase sempre usam 8413.60.90
+
+### Como escolher entre 8481.20 e 8481.80?
+- **8481.20:** Válvulas principais de controle hidráulico (spool valves, blocos de controle)
+- **8481.80:** Válvulas simples, auxiliares, check valves
+- **Regra:** Se é válvula de controle principal = 8481.20
+
+### Como escolher entre 8412.21.10 e 8412.21.90?
+- **8412.21.10:** Apenas para máquinas agrícolas certificadas
+- **8412.21.90:** Escavadeiras, guindastes, construção = sempre 8412.21.90
+
+## Alíquotas de Importação (2024)
+- 8413.60.90: II = 14%, IPI = 5%
+- 8481.20.00: II = 16%, IPI = 5%
+- 8412.21.90: II = 14%, IPI = 10%
+- 8421.23.00: II = 16%, IPI = 5%
+
+## Observações Importantes
+1. Sempre verificar TIPI (Tabela de Incidência do IPI) atualizada
+2. Componentes "recondicionados" podem ter alíquotas diferenciadas
+3. Acordos comerciais (Mercosul, etc.) podem reduzir II
+4. Ex-tarifário pode reduzir II temporariamente (consultar Camex)

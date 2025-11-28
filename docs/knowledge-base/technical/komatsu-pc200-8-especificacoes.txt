@@ -1,0 +1,240 @@
+# Especificações Técnicas - Komatsu PC200-8
+
+## Sistema Hidráulico Principal
+
+### Bomba Hidráulica Principal
+**OEM:** 708-2L-00300
+**Tipo:** Bomba de Pistões Axiais de Deslocamento Variável (HAVC - Hydraulic Automatic Variable Control)
+
+#### Especificações
+- **Fabricante Original:** Kawasaki Heavy Industries
+- **Modelo Base:** K3V112DT
+- **Princípio:** Pistões axiais em swash plate variável
+- **Controle:** Servo-controlado eletronicamente (via PCU)
+- **Vazão Máxima:** 2 x 235 L/min (bomba dupla)
+- **Pressão Nominal:** 345 bar (5000 psi)
+- **Pressão Máxima Pico:** 380 bar (5500 psi)
+- **Rotação Nominal:** 2150 RPM
+- **Tipo de Eixo:** Cônico 1:8
+- **Montagem:** SAE B - 4 furos M12
+- **Peso:** 85 kg
+- **Volume de Óleo:** 2.1 L (interno)
+
+#### Características Especiais
+- **Torque Limiting Control (TLC):** Limita potência hidráulica para proteger motor diesel
+- **Pressure Compensator (PC):** Reduz vazão conforme pressão aumenta
+- **Load Sensing (LS):** Ajusta pressão bomba conforme demanda do sistema
+- **Flow Saturation Control:** Previne cavitação em alta demanda
+
+#### Portas e Conexões
+- Sucção: 1.5" SAE flange
+- Descarga Circuit 1: 1" SAE O-ring boss
+- Descarga Circuit 2: 1" SAE O-ring boss
+- Dreno: 1/2" SAE straight thread
+- Controle LS: 1/4" NPT
+- Servo: M14x1.5 (pressão piloto)
+
+### Sistema de Filtragem
+
+#### Filtro de Retorno Hidráulico
+**OEM:** 207-60-71182
+**Tipo:** Elemento filtrante spin-on
+- Micronagem: 10 μm (absolute)
+- Vazão: 450 L/min
+- Bypass: 2.5 bar (abre se filtro entupir)
+- Elemento: Papel sintético plissado
+- Válvula anti-dreno: Sim
+- Trocar a cada: 500 horas
+
+#### Filtro de Sucção (Strainer)
+**OEM:** 20Y-60-11261
+- Malha: 150 mesh (100 μm)
+- Limpeza: A cada 2000 horas
+- Material: Aço inox 316
+
+#### Filtro de Piloto
+**OEM:** 20Y-60-21470
+- Micronagem: 25 μm
+- Trocar a cada: 1000 horas
+
+### Válvulas de Controle Principal
+
+#### Bloco de Controle (Control Valve)
+**OEM:** 723-47-13101
+**Tipo:** Válvula spool 6 seções + bloco adicional
+- Fabricante: Komatsu
+- Pressão Piloto: 40 bar
+- Válvulas de Alívio Principais: 345 bar
+- Válvulas de Retenção Cross-over: Integradas
+- Solenoides: 12V DC (8 unidades)
+
+**Seções:**
+1. Lança (Boom) - Prioridade 1
+2. Braço (Arm) - Prioridade 2
+3. Caçamba (Bucket) - Prioridade 3
+4. Giro (Swing) - Prioridade 4
+5. Translação Esquerda (Travel L)
+6. Translação Direita (Travel R)
+
+### Cilindros Hidráulicos
+
+#### Cilindro de Lança (Boom)
+**OEM:** 707-01-0J210 (esquerdo), 707-01-0J220 (direito)
+- Diâmetro Pistão: 150 mm
+- Diâmetro Haste: 110 mm
+- Curso: 1400 mm
+- Pressão Trabalho: 345 bar
+- Força Extensão: 610 kN
+- Força Retração: 410 kN
+- Vedações: Parker V-pack + U-cup
+
+#### Cilindro de Braço (Arm)
+**OEM:** 707-01-0J230
+- Diâmetro Pistão: 135 mm
+- Diâmetro Haste: 100 mm
+- Curso: 1580 mm
+- Pressão Trabalho: 345 bar
+- Força Extensão: 480 kN
+- Força Retração: 325 kN
+
+#### Cilindro de Caçamba (Bucket)
+**OEM:** 707-01-0J240
+- Diâmetro Pistão: 125 mm
+- Diâmetro Haste: 90 mm
+- Curso: 1120 mm
+- Pressão Trabalho: 345 bar
+- Força Extensão: 425 kN
+- Força Retração: 290 kN
+
+### Motor de Giro (Swing Motor)
+**OEM:** 706-7G-01070
+**Tipo:** Motor de pistões radiais
+- Fabricante: Kayaba (KYB)
+- Modelo: MSG-27P
+- Cilindrada: 270 cc/rev
+- Pressão Máxima: 345 bar
+- Rotação Máxima: 25 RPM (saída final)
+- Torque Máximo: 75 kN·m
+- Freio: Multidisco em banho de óleo (acionamento mola, liberação hidráulica)
+
+### Motores de Translação (Travel Motors)
+**OEM:** 706-88-00151 (esquerdo), 706-88-00152 (direito)
+**Tipo:** Motor de pistões axiais com redução planetária
+- Cilindrada: 210 cc/rev
+- Redução Final: 68.6:1
+- Pressão Máxima: 345 bar
+- Velocidade Alta: 5.5 km/h
+- Velocidade Baixa: 3.3 km/h
+- Freio: Multidisco integrado
+
+### Fluido Hidráulico
+
+#### Especificação Original
+**Komatsu Genuine Oil HD 46**
+- Tipo: Óleo hidráulico mineral
+- Viscosidade: ISO VG 46 (46 cSt @ 40°C)
+- Índice de Viscosidade: >110
+- Temperatura de Operação: -20°C a +80°C
+
+#### Alternativas Aprovadas
+- Shell Tellus S2 M 46
+- Mobil DTE 25
+- Castrol Hyspin AWS 46
+- Total Azolla ZS 46
+
+#### Capacidade do Sistema
+- Tanque Hidráulico: 230 L
+- Sistema Total (com cilindros e bomba): 280 L
+- Troca Completa: 250 L (dreno não remove todo óleo dos cilindros)
+
+### Pressões de Teste e Ajuste
+
+#### Válvula de Alívio Principal
+- Ajuste Padrão: 345 ± 7 bar
+- Procedimento: Usar manômetro 0-500 bar na porta de teste
+- Ferramenta: Chave allen 6mm (screw de ajuste)
+
+#### Válvula de Alívio de Piloto
+- Ajuste: 40 ± 2 bar
+- Localização: Bloco de controle piloto
+
+#### Pressão Load Sensing
+- Pressão Standby: 20-25 bar
+- Pressão Máxima LS: 355 bar
+- Delta P (bomba-LS): 15-20 bar
+
+### Torques de Aperto Críticos
+
+| Componente | Torque |
+|------------|---------|
+| Parafusos de fixação bomba | 85-95 Nm |
+| Conexões SAE O-ring boss 1" | 60-70 Nm |
+| Conexões SAE flange 1.5" | 140-160 Nm |
+| Parafusos tampa cilindro | 120-130 Nm |
+| Porca haste cilindro | 280-320 Nm |
+| Parafusos fixação motor giro | 180-200 Nm |
+
+### Diagnóstico de Falhas Comuns
+
+#### Perda de Força em Lança
+1. Verificar pressão sistema: deve atingir 345 bar
+2. Testar válvula de alívio de lança (pode estar fraca)
+3. Verificar desgaste interno do cilindro (vazamento interno)
+4. Checar vazamento externo nas vedações
+
+#### Giro Lento ou Travando
+1. Verificar freio de giro (pode não estar liberando)
+2. Testar pressão liberação freio: mínimo 15 bar
+3. Checar filtro de piloto (pode estar entupido)
+4. Verificar desgaste rolamento pinhão
+
+#### Aquecimento Excessivo (>80°C)
+1. Limpar radiador de óleo (oil cooler)
+2. Verificar nível de óleo (baixo causa cavitação)
+3. Testar válvula de alívio (travada aberta)
+4. Checar se ventilador do radiador está funcionando
+
+#### Ruído na Bomba (Cavitação)
+1. Verificar nível de óleo hidráulico
+2. Limpar filtro de sucção (strainer)
+3. Verificar se mangueira de sucção não está colapsando
+4. Checar pressão atmosférica no tanque (respiro entupido)
+
+### Manutenção Preventiva
+
+| Item | Intervalo | Procedimento |
+|------|-----------|--------------|
+| Nível óleo hidráulico | Diário | Verificar visor tanque |
+| Filtro de retorno | 500h | Trocar elemento |
+| Filtro de piloto | 1000h | Trocar elemento |
+| Filtro de sucção | 2000h | Limpar malha |
+| Óleo hidráulico | 2000h | Troca completa |
+| Amostra de óleo | 1000h | Análise laboratorial |
+| Teste de pressão | 1000h | Calibrar válvulas |
+| Cilindros | 5000h | Substituir vedações |
+| Bomba principal | 8000h | Revisão completa |
+
+### Códigos de Erro Relacionados
+
+| Código | Descrição | Ação |
+|--------|-----------|------|
+| E-04 | Pressão hidráulica baixa | Verificar nível óleo, bomba |
+| E-05 | Temperatura alta óleo | Verificar radiador, nível |
+| E-12 | Erro sensor pressão | Verificar fiação sensor |
+| W-15 | Filtro hidráulico entupido | Trocar elemento filtro |
+
+## Sistema Elétrico de Controle
+
+### PCU (Pump Control Unit)
+**OEM:** 7835-46-1001
+- Controla ângulo swash plate da bomba
+- Input: Sensores de pressão LS, temperatura, RPM
+- Output: Corrente servo-controle (0-800 mA)
+- Alimentação: 24V DC
+- Proteção: IP65
+
+### Sensores
+- Sensor Pressão Principal: 20Y-06-22121 (0-500 bar, 4-20mA)
+- Sensor Temperatura Óleo: 7861-93-4130 (-40 a +150°C, NTC)
+- Sensor Nível Óleo: 20Y-04-21511 (reed switch)
+- Sensor Filtro: 20Y-60-11581 (diferencial de pressão)

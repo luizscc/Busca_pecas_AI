@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
+    "dev:local": "wrangler dev --local",
+    "start": "wrangler dev --local",
     "deploy": "wrangler deploy",
     "ingest": "ts-node scripts/ingest-poc.ts",
     "test-rag": "ts-node scripts/test-rag.ts",
